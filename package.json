@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build && next export",
-    "start": "cross-env NODE_ENV=production next start -p 3000"
+    "start": "cross-env NODE_ENV=production next start -p 3000",
+    "deploy": "serverless"
   },
   "author": "JongIk",
   "license": "ISC",
@@ -21,6 +22,8 @@
     "moment": "^2.29.3",
     "next": "^9.5.5",
     "next-redux-wrapper": "^6.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^8.0.1",
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",

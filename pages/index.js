@@ -12,8 +12,9 @@ import axios from "axios";
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, loadPostsLoading, retweetError } =
-    useSelector((state) => state.post);
+  const { mainPosts, hasMorePosts, loadPostsLoading, retweetError } = useSelector(
+    (state) => state.post
+  );
   console.log(mainPosts);
   useEffect(() => {
     if (retweetError) {
@@ -57,25 +58,7 @@ const Home = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async (context) => {
-//     const cookie = context.req ? context.req.headers.cookie : "";
-//     axios.defaults.headers.Cookie = "";
-//     if (context.req && cookie) {
-//       axios.defaults.headers.Cookie = cookie;
-//     }
-//     context.store.dispatch({
-//       type: LOAD_MY_INFO_REQUEST,
-//     });
-//     context.store.dispatch({
-//       type: LOAD_POSTS_REQUEST,
-//     });
-//     context.store.dispatch(END);
-//     await context.store.sagaTask.toPromise();
-//   }
-// );
-
-Home.getInitialProps = (context) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const cookie = context.req ? context.req.headers.cookie : "";
   axios.defaults.headers.Cookie = "";
   if (context.req && cookie) {
@@ -89,6 +72,22 @@ Home.getInitialProps = (context) => async () => {
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
-};
+});
+
+// Home.getInitialProps = (context) => async () => {
+//   const cookie = context.req ? context.req.headers.cookie : "";
+//   axios.defaults.headers.Cookie = "";
+//   if (context.req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
+//   context.store.dispatch({
+//     type: LOAD_MY_INFO_REQUEST,
+//   });
+//   context.store.dispatch({
+//     type: LOAD_POSTS_REQUEST,
+//   });
+//   context.store.dispatch(END);
+//   await context.store.sagaTask.toPromise();
+// };
 
 export default Home;

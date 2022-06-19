@@ -17,9 +17,7 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { me, signUpLoading, signUpDone, signUpError } = useSelector(
-    (state) => state.user
-  );
+  const { me, signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (me && me.id) {
@@ -81,23 +79,12 @@ const Signup = () => {
         <div>
           <label htmlFor="user-email">아이디</label>
           <br />
-          <Input
-            name="user-email"
-            type="email"
-            value={email}
-            required
-            onChange={onChangeEmail}
-          />
+          <Input name="user-email" type="email" value={email} required onChange={onChangeEmail} />
         </div>
         <div>
           <label htmlFor="user-nick">닉네임</label>
           <br />
-          <Input
-            name="user-nick"
-            value={nickname}
-            required
-            onChange={onChangeNickname}
-          />
+          <Input name="user-nick" value={nickname} required onChange={onChangeNickname} />
         </div>
         <div>
           <label htmlFor="user-password">비밀번호</label>
@@ -120,9 +107,7 @@ const Signup = () => {
             required
             onChange={onChangePasswordCheck}
           />
-          {passwordError && (
-            <ErrorMessage> 비밀번호가 일치하지 않습니다. </ErrorMessage>
-          )}
+          {passwordError && <ErrorMessage> 비밀번호가 일치하지 않습니다. </ErrorMessage>}
         </div>
         <div>
           <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
@@ -140,23 +125,7 @@ const Signup = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async (context) => {
-//     const cookie = context.req ? context.req.headers.cookie : "";
-//     axios.defaults.headers.Cookie = "";
-//     if (context.req && cookie) {
-//       axios.defaults.headers.Cookie = cookie;
-//     }
-//     context.store.dispatch({
-//       type: LOAD_MY_INFO_REQUEST,
-//     });
-
-//     context.store.dispatch(END);
-//     await context.store.sagaTask.toPromise();
-//   }
-// );
-
-Signup.getInitialProps = (context) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const cookie = context.req ? context.req.headers.cookie : "";
   axios.defaults.headers.Cookie = "";
   if (context.req && cookie) {
@@ -168,6 +137,20 @@ Signup.getInitialProps = (context) => async () => {
 
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
-};
+});
+
+// Signup.getInitialProps = (context) => async () => {
+//   const cookie = context.req ? context.req.headers.cookie : "";
+//   axios.defaults.headers.Cookie = "";
+//   if (context.req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
+//   context.store.dispatch({
+//     type: LOAD_MY_INFO_REQUEST,
+//   });
+
+//   context.store.dispatch(END);
+//   await context.store.sagaTask.toPromise();
+// };
 
 export default Signup;
